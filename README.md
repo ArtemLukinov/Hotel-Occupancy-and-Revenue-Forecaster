@@ -12,7 +12,7 @@ Author: Artem Lukinov
 -  [The Modeling Process](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#The-Modeling-Process)
 -   [Conclusions and Recommendations](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#Conclusions-and-Recommendations)
 
-## [](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#File structure)File Structure
+## [](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#File-structure)File Structure
 
 **data**  - all data points, cleaned data file and supporting materials
 **images** all imagery used in the project and presentation
