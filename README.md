@@ -44,7 +44,7 @@ After collecting and cleaning and concatenating the data, this was the final Dat
 | revenue | Revenue | int64 |
 
 ## [](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#Data-Cleaning)Data Cleaning
-After the final dataframe was concatenated from all files, a thorough review of all columns was performed to identify potential features for the model. The data was pretty clean with no null values and just 6 rows with metadata information that were identified by their index and removed. Although data was broken down into 11 distinct market segments, a decision to aggregate data on the daily level was made in order to simplify modeling process. This data was still plenty to  support the problem statement. 
+After the final data frame was concatenated from all files, a thorough review of all columns was performed to identify potential features for the model. The data was pretty clean with no null values and just 6 rows with metadata information that were identified by their index and removed. Although data was broken down into 11 distinct market segments, a decision to aggregate data on the daily level was made in order to simplify modeling process. This data was still plenty to  support the problem statement. 
 
 ## [](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#Initial-EDA)Initial EDA
 
@@ -54,7 +54,7 @@ For project's purpose the data was looked at from two viewpoints:
 
 Rooms Sold:
 
-PICTURE
+![Rooms Sold 2017-2021](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/first_look%20rooms.png)
 
 There are couple of immediate observations here:
 
@@ -66,7 +66,7 @@ There are couple of immediate observations here:
 
 Now let's take a look at revenue data:
 
-PICTURE first_look_revenue
+![Revenue 2017-2021](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/first_look_revenue.png)
 
 Since rooms and revenue are expected to be correlated (the more rooms sold, the higher the revenue), this graph looks almost identical albeit at a different scale.
 
@@ -90,11 +90,11 @@ We can see that our statistic values of -6.8 and -9.7 are less than the critical
 
 This chart helps take another look at overall data and determine its characteristics:
 
-PICTURE - decomp_roomsdecomp
+![Decomposition Chart - Rooms](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/decomp_rooms.png)
 
 From the trend view we see that there is a seasonal component on an annual level and there is seasonality present on rooms sold. Now let's check revenue data:
 
-PICTURE - decomp_rev
+![Decomposition Chart - Revenue](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/decomp_rev.png)
 
 Very similar findings to the ones in Rooms data: there is seasonality on an annual level. There is no trending observed until March 2020, when a downward trend starts to appear showing the impact of Covid-19.
 
@@ -102,20 +102,20 @@ Very similar findings to the ones in Rooms data: there is seasonality on an annu
 
 In order to determine the most optimal parameters for time series models, let's take a look at any autocorrelation and moving averages.
 
-PICTURE ACF-room
+![Autocorrelation Chart - Rooms](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/ACF_rooms.png)
 
 Based on the ACF plot there is evidence of a trend since the small lag values have large, positive autocorrelations. The "scalloped" shape of the graph shows a seasonal cycle at every 5-7 lags (weekly) for MA(1). If it was MA(2) we would see two spikes lag1 and lag2, repeated in a weekly cycle. Because of this, we will use a value of MA(1) for the baseline model. Now let's take a look at PACF:
 
-PCITURE PACF-room
+![Partial Autocorrelation Chart - Rooms](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/PACF_rooms.png)
 
 This plots the correlation at a given lag (indicated by the horizontal axis), controlling for all of the previous lags. In the PACF plot we see some positive and some negative significant partial autocorrelations, which usually indicates strong seasonal fluctuations. There is a large dropoff after lag 1, which gives us the value for AR(1). This view also confirms seasonality at the weekly level as we see spikes on lag 7, 15, 21. However, this seasonality is not very strong. Let's explore daily revenue:
 
-PICTURE ACF-rev
+![Autocorrelation Chart - Revenue](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/ACF_rev.png)
 
 For an autoregressive (AR) time series, the ACF will go down gradually without any sharp cut-off, which is observed here. There is a MA(1) here, similar to rooms. This ACF tells us it is an AR series as well, then we turn to the PACF:
 
 
-PICTURE PACF-rev
+![Partial Autocorrelation Chart - Revenue](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/PACF_rev.png)
 
 Very similar seasonal pattern, except this tells AR also looks to be AR(1). We are seeing one big spike, then starts to converse towards zero.
 
@@ -165,9 +165,9 @@ Both AIC and RMSE measurements were used in time series modeling in order to ide
 
 With both KPIs ARIMA w/Grid Search performed the best.
 
-PICTURE ARIMA-gs-rooms
+![ARIMA model - Rooms](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/ARIMA_gs_rooms.png)
 
-PICTURE ARIMA-gs-rev
+![ARIMA model - Revenue](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/ARIMA_gs_rev.png)
 
 The orange line in the graph represents the expected future data based on the forecasting model: amount of rooms sold and revenue. The results of this model do not look surprising - they represent the autoregressive nature of the data. The reason for a steady graph with lack of spikes shows that ARIMA deals poorly with outliers in the data and that was one of the reasons to try SARIMA - a lot of outliers in our data have a 365 day seasonality (annual conventions, holidays, etc.)
 
@@ -219,6 +219,16 @@ The GRU is the newer generation of Recurrent Neural Networks and is pretty simil
 
 Early Stops were considered, but the loss charts determined it to be risky. 100 epochs was deemed the most appropriate length of training. This parameter can be readdressed in the future for further optimization.
 
+GRU performed best for Rooms and LSTM for Revenue.
+
+![GRU RNN model - Rooms](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/GRU_best_rooms.png)
+
+It is interesting to see how our model handles periods with high demand and forecast rooms over the capacity of the hotel in January of 2019, which is a common sight in hotel industry meaning demand is higher than capacity and rates have to be maximized. This particular period corresponds to JPMorgan that is the highest rated demand drive for San Francisco. Similar spikes are observed in October/November where huge conventions take place and a big lull towards the end of the year - Christmas and New Year when travel is down. These particulars are one of the strength of LSTM RNN that takes all that information into consideration. 
+
+![LSTM RNN model - Revenue](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/LSTM_best_rev.png)
+
+Similar observations in revenue. Spike represent typical periods of high demand. Although this is not the most accurate model, the forecast line makes a lot of sense to domain experts. This may be a goof model to optimize in the next stages of the project.
+
 ## Prophet and NeuralProphet Models
 
 As part of the project, some time was set aside to research alternative models to tackle this project. Two specialized models were identified in the process and proved highly effective. The package installs were easy and the learning curve was rather short. In about 30 minutes, an average Data Science enthusiast can build a baseline model and start tweaking it. 
@@ -252,6 +262,8 @@ Similar to Prophet, the implementation was straightforward, yet multiple paramet
 
 NeuralProphet showed a staggering 73% improvement in revenue RMSE and 8% RMSE improvement in rooms over baseline model. Since it is a new package, the default parameters are likely not the best and were optimized efficiently.
 
+
+
 ## [](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#Conclusions-and-Recommendations)Conclusions and Recommendations
 
 The top 3 most successful models were ranked:
@@ -263,12 +275,20 @@ The top 3 most successful models were ranked:
 |2|Prophet (baseline)|24.43|
 |3|ARIMA Grid Search|27.11|
 
-**Rooms**
+![NeuralProphet model - Rooms](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/NP-rooms.png)
+
+Graphical representation on the forecast show that the model takes into consideration both the seasonality and outliers and forecasts optimally into the future.
+
+**Revenue**
 |Rank  | Model | RMSE|
 |--|--|--|
 |1|NeuralProphet |9554.99|
 |2|Prophet Grid Search|11015.68|
 |3|ARIMA Grid Search|16481|
+
+![NeuralProphet model - Revenue](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/NP-rev.png)
+
+Same observation as with rooms - all patterns are observed and outliers are considered.
 
 **Conclusions**
 - It is an obvious conclusion that NeuralProphet is the top choice for this project. It is important to note that the RNNs used in this project are not complex and may be improved upon. However, given the overall time commitment, NeuralProphet should be still considered a winner in efficiency and results. 
