@@ -2,6 +2,8 @@
 
 Author: Artem Lukinov
 
+* * * Best viewed in GitHub's Dark Mode * * *
+
 ### [](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#Contents)Contents:
 
 -   [Background](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#Background) 
