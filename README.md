@@ -16,13 +16,13 @@ Author: Artem Lukinov
 
 ## [](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#File-structure)File Structure
 
-**data**  - all data points, cleaned data file and supporting materials
-**images** all imagery used in the project and presentation
-**1_Data_Cleaning.ipynb** - data cleaning notebook
-**2_EDA.ipynb** - Exploratory Data Analysis
-**3_Modeling.ipynb** - ARIMA, SARIMA, Prophet, LSTM RNN and GRU RNN modeling process and interpretations
-**4_NeuralProphet Models.ipynb** - NeuralProphet modeling process and interpretations
-**requirements.txt** - required packages
+- **data**  - all data points, cleaned data file and supporting materials
+- **images** all imagery used in the project and presentation
+- **1_Data_Cleaning.ipynb** - data cleaning notebook
+- **2_EDA.ipynb** - Exploratory Data Analysis
+- **3_Modeling.ipynb** - ARIMA, SARIMA, Prophet, LSTM RNN and GRU RNN modeling process and interpretations
+- **4_NeuralProphet Models.ipynb** - NeuralProphet modeling process and interpretations
+- **requirements.txt** - required packages
 
 ## [](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster#Background)Background
 
