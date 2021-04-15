@@ -225,7 +225,7 @@ GRU performed best for Rooms and LSTM for Revenue.
 
 ![GRU RNN model - Rooms](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/GRU_best_rooms.png)
 
-It is interesting to see how our model handles periods with high demand and forecast rooms over the capacity of the hotel in January of 2019, which is a common sight in hotel industry meaning demand is higher than capacity and rates have to be maximized. This particular period corresponds to JPMorgan that is the highest rated demand drive for San Francisco. Similar spikes are observed in October/November where huge conventions take place and a big lull towards the end of the year - Christmas and New Year when travel is down. These particulars are one of the strength of LSTM RNN that takes all that information into consideration. 
+It is interesting to see how our model handles periods with high demand and forecast more rooms over periods of the highest rated demand drive for San Francisco. Similar spikes are observed in October/November where huge conventions take place and a big lull towards the end of the year - Christmas and New Year when travel is down. These particulars are one of the strength of GRU RNN that takes all that information into consideration. 
 
 ![LSTM RNN model - Revenue](https://github.com/ArtemLukinov/Hotel-Occupancy-and-Revenue-Forecaster/blob/main/images/LSTM_best_rev.png)
 
